@@ -7,7 +7,7 @@ require (
 	github.com/andybalholm/cascadia v1.2.0 // indirect
 	github.com/disintegration/imaging v1.6.2
 	github.com/fatih/color v1.9.0
-	github.com/go-ldap/ldap v3.0.3+incompatible
+	github.com/go-ldap/ldap/v3 v3.2.4 // indirect
 	github.com/go-shiori/go-readability v0.0.0-20200413080041-05caea5f6592
 	github.com/go-shiori/warc v0.0.0-20191003110312-7b3c5582fd83
 	github.com/go-sql-driver/mysql v1.5.0
@@ -25,7 +25,7 @@ require (
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5 // indirect
 	go.etcd.io/bbolt v1.3.4 // indirect
-	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37
+	golang.org/x/crypto v0.0.0-20200604202706-70a84ac30bf9
 	golang.org/x/image v0.0.0-20200430140353-33d19683fad8 // indirect
 	golang.org/x/net v0.0.0-20200513185701-a91f0712d120 // indirect
 	golang.org/x/sys v0.0.0-20200515095857-1151b9dac4a9 // indirect

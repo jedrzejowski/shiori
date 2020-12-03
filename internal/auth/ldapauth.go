@@ -10,7 +10,7 @@ import (
 	"log"
 	"text/template"
 
-	"github.com/go-ldap/ldap"
+	"github.com/go-ldap/ldap/v3"
 )
 
 // LDAPAuth class
@@ -53,14 +53,13 @@ func NewLDAPAuth(settings LDAPSettings) (LDAPAuth, error) {
 }
 
 func (la *LDAPAuth) connect() (*ldap.Conn, error) {
-	// log.Println("LDAP:connect: Dial")
-	l, err := ldap.Dial("tcp", fmt.Sprintf("%s:%d", la.settings.Host, la.settings.Port))
-	if err != nil {
-		return nil, err
-	}
+	var l *ldap.Conn
+	var err error
+
+	addr := fmt.Sprintf("%s:%d", la.settings.Host, la.settings.Port)
 
 	if la.settings.StartTLS {
-		// Reconnect with TLS
+
 		var tlsConfig tls.Config
 		if la.settings.SkipCertificateVerif {
 			log.Println("WARNING: LDAP LDAPAuth with TLS without certificate verification")
@@ -72,22 +71,27 @@ func (la *LDAPAuth) connect() (*ldap.Conn, error) {
 				RootCAs:            la.certs,
 			}
 		}
-		// log.Println("LDAP:connect: StartTLS")
-		err = l.StartTLS(&tlsConfig)
+		
+		l, err = ldap.DialTLS("tcp", addr, &tlsConfig)
+
 		if err != nil {
 			return nil, err
 		}
 	} else {
 		log.Println("WARNING: LDAP LDAPAuth without TLS")
+
+		l, err = ldap.Dial("tcp", addr)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	// Bind with read only user
-	// log.Println("LDAP:connect: Bind as", la.settings.BindDN)
 	err = l.Bind(la.settings.BindDN, la.settings.BindDNPassword)
 	if err != nil {
 		return nil, err
 	}
-	// log.Println("LDAP:connect: Done")
+	
 	return l, nil
 }
 
