@@ -102,9 +102,6 @@ func (h *handler) apiLogout(w http.ResponseWriter, r *http.Request, ps httproute
 
 // apiGetBookmarks is handler for GET /api/bookmarks
 func (h *handler) apiGetBookmarks(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	// Make sure session still valid
-	err := h.validateSession(r)
-	checkError(err)
 
 	// Get URL queries
 	keyword := r.URL.Query().Get("keyword")
